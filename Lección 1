@@ -1,0 +1,26 @@
+-- Las bases de datos son relacionales porque las entidades tienen relación entre ellas.
+-- La versión transact es una aducuación de SQL para Microsoft.
+-- Se comprenderá las bases de datos con la base datos Norwin
+-- https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/instnwnd.sql
+-- La base de datos es cliente-servidor; un cliente puedeseruna aplicación que se conecta paa modificar los datos.
+-- Para realizar consulta de datos se hace a traves de transact ASQ. Al conjunto de intrucciones se le conoce como script o batches.
+-- Para gestionsr SQL Server es necesrio otra herramienta de visualización comoSQL Server Management Studio.
+  -- El sql manager, gestiona los servicios
+  --Con quality service se depuran los datos, decir donde hay errores para corregirlos
+
+
+-------- New Query-----
+- A parir de aquí se comienza a escribir el escript para consultas.
+- En la etiqueta de Databases ahí debría de estar cargada la base datps.
+- El go se tuliza para crear secciones y que no corra todo
+
+Use Noerthwind
+go
+
+Select getday()
+Select Costumer ID, CompanyName, 
+from Costumers
+
+-- para todas las lineas
+Select * 
+from Costumers
