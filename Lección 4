@@ -1,0 +1,69 @@
+----------- Consultas de talas----------- 
+-- En la clausula del from es de donde se pueden seleccionar mas de dos tablas 
+-- CROSS JOIN: combina todas las filas de las tablas 
+-- INNER JOIN: cobina las tablas solo de las filas que coinciden (interseccion)
+-- OUTER JOIN: LEFT OUTER JOIN & RIGHT OUTER JOIN, adiciona los datos que están en una tabla o en otrademo
+
+
+-- para unir tablas deben de tener una variable en comun aunque el nombre no sea el mismo 
+USE Northwith 
+go
+
+--interseccion
+SELECT costumers.costumerid, costumers.comapnyname, costumers.contactname, costumers.countr,
+		orders.ordersid, orders.orderdate
+FROM costumers inner join orders
+on costumers.costumersid=orders.costumerid
+
+--- para hacerlo más práctico se puede usar un aliasdemo
+SELECT c.costumerid, c.comapnyname, c.contactname, c.countr,
+		orders.ordersid, orders.orderdate
+FROM costumers as c inner join orders
+on costumers.costumersid=orders.costumerid
+WHERE c.country='USA'
+
+-- Para agregar tres tablas con el campo en comun 
+SELECT costumers.costumerid, costumers.comapnyname, costumers.contactname, costumers.countr,
+		orders.ordersid, orders.orderdate, p.productname, d.unirprice, d.quantity
+FROM costumers inner join orders
+on costumers.costumersid=orders.costumerid
+INNER JOIN [orde details] as d 
+ON orders.orderid=d.orderid
+INNER JOIN products as p 
+on p.productid= d.productid
+
+
+--outer join 
+-- devuelve las filas de la tablas que en ambas coinciden más las filas de cualquiera de las dos tablasdemo
+-- FULL JOIN es igua a A union B 
+SELECT c.costumerid, c.comapnyname, c.contactname, c.countr,
+		o.ordersid, o.orderdate
+FROM costumers as c left OUTER join orders AS o 
+on costumers.costumersid=orders.costumerid
+go
+
+--- se puede cambiar el orden de las tablas de from y seria euivalente a hacer right outer join 
+-- cuando hay valores nulosdemo
+SELECT c.costumerid, c.comapnyname, c.contactname, c.countr,
+		o.ordersid, o.orderdate
+FROM costumers as c left OUTER join orders AS o 
+on costumers.costumersid=orders.costumerid
+WHERE o.orderid is NULL
+go
+
+-- crear las mismas tablas, hacer una copiademo
+SELECT* INTO Clientes from costumers
+go
+
+DELETE clientes WHERE name='ANTON'
+
+-- FULL OUTER JOIN ES DISTINTO AL CROSS JOIN 
+-- es un producto carteciano que cruza los elementos de la tabla a con los de la tabla b 
+ select* FROM clientes --=10
+ SELECT *from ordenes --=12
+ -- elproducto sera de 120
+ SELECT c.costumerid, c.comapnyname, c.contactname, c.countr,
+		o.ordersid, o.orderdate
+FROM clientes as c CROSS JOIN ordenes AS o 
+-- on c.costumersid=o.costumerid ///no necesita este valor
+go
