@@ -1,0 +1,61 @@
+------------- LECCION 3 ----------
+-- Consultas con la instruccion select 
+
+--ccuando hya una palabra reservada no la jalará el sistema por tanto se pone entre corchetes []
+
+ 
+-- para dar un alias
+select costumeid, companyname as Company, countr From costumers
+go
+-- valores unicos 
+select costumeid, companyname, Company, country From costumers
+go
+
+-- realizar calculos dentro de la tabla 
+select productmane, unitprice, unitprice *.12 as impuestoiva from products 
+go
+
+select costumerid, orderid, orderdate, year(orderdate) as anio, month(orderdate) as mes from orders
+go
+
+select orderid, productid, unitprice, quantity, dicpunt, (unitprce*quantity)-(unitprice*quaantity*dicount) as parcial
+from [oeder datails]
+
+-- valores unicos
+
+SELECT DISTINCT country from costumrs
+order by country
+go
+
+-- En lugar de AS se puede usar = o un simple espacio es más peligroso por tanto se usa comunmente AS 
+-- No se pede usar un alias para filtrar, ordenar y en general recrear caulquier tipo de dato para ello es necesario usar el nombre de la variable
+
+--CASE 
+SELECT productname, categoryid from products 
+
+-- para recategorizar variables 
+SELECT productname, category =
+	CASE categoryid
+    	WHERE 1 THEN 'Bebidas'
+        WHERE 2 THEN 'Lacteos'
+        WHERE 3 THEN 'Condimentos'
+        WHERE 4 THEN 'otros'
+        ELSE 'No es venta'
+    END 
+FROM products
+order by productname
+go
+
+-- tambies se puede escribir de la siguiente manera 
+SELECT productname,
+	CASE categoryid
+    	WHERE 1 THEN 'Bebidas'
+        WHERE 2 THEN 'Lacteos'
+        WHERE 3 THEN 'Condimentos'
+        WHERE 4 THEN 'otros'
+        ELSE 'No es venta'
+    END  AS Category
+FROM products
+order by productname
+go
+
