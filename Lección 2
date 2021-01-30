@@ -1,0 +1,153 @@
+-------------------- Lección 2 -------------------------
+-- las bases de datos con un cilindreo con las que son creadas por el usuario
+
+-- Introducción a las consultasdemo
+--Las transacciones se divoden e tres
+-- 1. DATA MANIPULATION LANGUAGE: SELECT, INSERT, UPDATE, DELETE
+-- 2. DATA DEFINATION LANGUAGE: CREATE, ALTER, DROP
+-- 3. DATA CONTROL LANGUAJE: GRANT, REVOKE, DENY
+
+-- go sirve para separar seccioesdemo
+Use Northwind
+
+go
+SELECT Costumerid, Companyname, ContacrTitle, Country from costumers
+WHERE Costumerid='ABC'
+go
+INSERT INTO Costumer (Costumerid, Companyname, ContacrTitle, Country)
+VALUES ('ABC' ,'DHD' ,'BJO' ,'Guatemala')
+
+go
+UPDATE Costumers SET CompanyName='vida sa de cv'
+WHERE Costumerid='ABC'
+go
+
+DELETE Costumers SET CompanyName='vida sa de cv'
+WHERE Costumerid='ABC'
+
+
+--- Operadores
+-- IN, BETEWEN, LIKE,
+-- =, <, >, <=, >=
+-- <> DIFERENTE
+-- != NO ES IGUAL 
+-- <= NO ES MENOR 
+-- AND, OR, NOT 
+-- + CONCATENAR 
+
+-- Funciones de texto
+-- SUBSTRING, LEFT, RIGHT, LEN, DATALENGTH, REPLACE, REPLICATE, UPPER, LOWER, 
+-- RTRIM 
+-- LTRIM
+
+-- Funciones de fecha 
+-- GETDATE, SYSDATETIME, GETUTCDATE, DATEADD, YEAR, MONTH, DAYdemo
+
+-- Funciones agregado 
+-- SUM, MIN, MAX, AVG, COUNT 
+go
+
+DECLARE @miprimer_var VARCHAR (100)
+SET @miprimer_var ='Bienvenido al curso'
+SELECT @miprimer_var
+go
+-- sin SET 
+DECLARE @miprimer_var VARCHAR (100)= @miprimer_var ='Bienvenido al curso'
+SELECT @miprimer_var
+go
+
+/* WHERE filtra los datos
+
+-- Instrucciones para crear un curso 
+-- IF... ELSE 
+-- WHILE... 
+-- BREAK 
+-- CONTINUE 
+-- BEGIN 
+--END 
+
+-- Manejo de errores 
+-- TRY... CATCH 
+
+-- Control de transacciones 
+-- BEGIN TRANSACTION 
+-- COMMIT 
+-- ROLLBACK TRANSACTION 
+*/
+
+---------------- Intruccion select ---------
+/* los miembros son los clientes y los  atributos son las varibles de cada uno de ellos. 
+Evitar decr al motor como recueper datos, también evitar procesar cada resultado individualmente (go) 
+*/
+
+SELECT * FROM costumers
+WHERE Country='Mexico' AND Region ='OR'
+go
+
+-- Para devolver las variables de las tablas se usa en la consola 
+sp_help Costumer
+
+/* Predicdos 
+WHERE 
+HAVING 
+CASE 
+ENCENDIDO 
+CHECK 
+IF
+*/
+
+SELECT * FROM costumers
+WHERE Country='Mexico' OR  Country='USA'
+go
+
+SELECT CONTACTNAME, NAME, COUNTRY
+WHERE Country='Mexico' OR  Country='USA'
+go
+
+-- ORDENAMIENTO 
+SELECT CONTACTNAME, NAME, COUNTRY
+WHERE Country='Mexico' OR  Country='USA'
+ORDER BY Country
+go
+
+-- Contar cuantos elementos tengo con 10 elementos 
+SELECT Country, COUNT(*) as Contar
+FROM Costumers 
+WHERE Country ='USA'
+GROUP BY Country
+HAVING COUNT(*)>10
+ORDER BY Country
+go
+
+-- Forma para escribir las sentencias es el orden 
+SLECT >> FROM >> WHERE
+				GROUP BY
+                HAVING
+                ORDER BY
+-- Concatenar selecciones                 
+SELECT Country, name, adress
+FROM Costumers 
+WHERE Country in ('Mexico', 'Argentina', 'Brazil')
+go
+
+-- Que empiece con A pero los demás no me importa 
+SELECT Country, name, adress
+FROM Costumers 
+WHERE CompanyName LIKE 'A%'
+ORDER BY Country 
+go 
+ 
+-- Que termine con s pero los demás no me importa 
+SELECT Country, name, adress
+FROM Costumers 
+WHERE CompanyName LIKE '%s'
+ORDER BY Country 
+go 
+
+-- usar betewen 
+Select Productname, price, from products
+WHERE unitprice  BETWEEN 14 and 30
+ORDER by product name 
+go
+
+ 
