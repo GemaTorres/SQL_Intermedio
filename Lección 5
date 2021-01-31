@@ -1,0 +1,97 @@
+--------- ORDENAR Y FILTRAR DATOS ---------
+-- ordernar una tabla por order by
+SELECT* companyname, contactname, contactitle, country
+FROM suppliers
+order BY country
+go
+
+-- es igual a decir 
+SELECT* companyname, contactname, contactitle, country
+FROM suppliers
+order BY 4
+go
+
+SELECT* companyname, contactname, contactitle, country
+FROM suppliers
+order BY 4, contactname DESC 
+go
+
+-- EN EL WHERE no se pueden utilizar los alias 
+SELECT* companyname, contactname, contactitle, country
+FROM suppliers
+WHERE country='Japan'
+go
+
+-- CON LIKE
+SELECT* companyname, contactname, contactitle, country
+FROM suppliers
+WHERE LIKE='J%'
+go
+-- con la segunda letra igual a 'a'
+SELECT* companyname, contactname, contactitle, country
+FROM suppliers
+WHERE LIKE='_a%'
+go
+
+--- que incien con A,B,C 
+SELECT* companyname, contactname, contactitle, country
+FROM suppliers
+WHERE LIKE='[^A-C]%'
+
+-- WHERE PRICE BETEWEN 20 AND 30 
+-- WHERE categoryname='granos' or ategoriname='dary products' or categoryname='tamales'
+-- WHERE IN categoryname=('granos','dary products' ,'tamales' )
+
+-- TOP es el head de R 
+-- PRIMEROS PRODUCTOS
+SELECT TOP 5 productname, price
+from products
+ORDER BY unitprice desc
+
+-- seleccionar el 10 porciento de los registros
+SELECT TOP 10 percent WITH TIES productname, price
+from products
+ORDER BY unitprice desc
+
+-- SI un valor tiene 5 de precio y esta en la posicion numero 10 pero tambien la 11 tiene el mismo precio 
+-- y queremos que ambos precios e muestren en la tabla entonces se agrefa 
+SELECT TOP 5 WITH TIES productname, price
+from products
+ORDER BY unitprice desc
+
+
+-- SI NECESITO los 10 productos más caros despés de los primeros 5 
+SELECT productname, price
+from products
+ORDER BY unitprice desc OFFSET 10 ROWS
+FETCH NEXT 5 ROWS ONLY
+go
+
+-- transact puede manejar ciclosdemo
+declare @i int=0
+while @i<10
+begin 
+	SELECT lastname + ', '+ firstname from employees 
+    ORDER BY lastname ASC OFFSET @i ROWS
+    FETCH NEXT 2 ROWS ONLY
+    SET @i=@i+2 
+END
+go
+----- manejo de valores nulos 
+-- se tiene que eliminar la fila o susutituir el valor nulo 
+SELECT companyname, phone, 
+	fax=CASE
+    	WHEN fax is NULL then 'no tiene'
+        ELSE fax
+        END
+FROM costumers 
+go
+-- otra forma es con el valor is null 
+SELECT companyname, isnull(fax,0) from costumers
+go
+-- en la nueva variable que se llama mediocomunicacion si fax tiene valor se colocara ese, sino pasara al telefono 
+-- si el telefono no tiene valor entonces colocara no tiene
+SELECT companyname, phone, fax, COALESCE(fax, phone, 'no tiene') as mediocomunicación 
+from costumers 
+WHERE fax is NULL
+
