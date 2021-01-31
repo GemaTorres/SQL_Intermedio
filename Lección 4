@@ -67,3 +67,23 @@ DELETE clientes WHERE name='ANTON'
 FROM clientes as c CROSS JOIN ordenes AS o 
 -- on c.costumersid=o.costumerid ///no necesita este valor
 go
+-- el self join se usa para compara las filas de la misma tabla y se lleva un alias 
+-- en la tabla empleado hay una variabla que indica a quien reporta que se encuentra dentro de 
+-- la misma tabla empleado 
+
+-- para esto se usa la misma tabla de manera que se 'duplicara' para dar dos nombes distintos y asi 
+-- generar la consulta 
+SELECT employeeid, lastname, firstname, reportsto
+from employee 
+go
+
+SELECT j.lastname, j.firstname, s.lastname, s.firstname,
+from employee as j inner JOIN employee as s
+on j.employeeis= s.reportsto
+ 
+ -- da las tablas de los jefes con las personas 
+ -- para dar los nombres pegados 
+ 
+SELECT j.lastname+ ' '+ j.firstname as jefe, s.lastname+' '+ s.firstname as empleado,
+from employee as j inner JOIN employee as s
+on j.employeeis= s.reportsto
